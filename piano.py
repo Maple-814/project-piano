@@ -41,7 +41,7 @@ def newpiano(screen):
     
     for i in range(keynumber):
         if i%7 in black_position:
-            pygame.draw.rect(screen, black, ((17*3+i*(key_white[0]), 0),key_black))
+            pygame.draw.rect(screen, black, ((18*3+i*(key_white[0]), 0),key_black))
             
     pygame.display.update()
     
@@ -55,7 +55,7 @@ def pressedpiano(screen, keys):
     for i in range(keynumber):
         pygame.draw.rect(screen, black, ((i*key_white[0], 0),key_white), 1)
         if i%7 in black_position:
-            pygame.draw.rect(screen, black, ((17*3+i*(key_white[0]), 0),key_black))
+            pygame.draw.rect(screen, black, ((18*3+i*(key_white[0]), 0),key_black))
             
     pygame.display.update()
     
