@@ -9,12 +9,14 @@ import pygame
 import sys
 
 #  definition
-size = (800,600)
+
+size = (23*3*7, 150*3)
 key_white = (23*3,150*3)
 key_black = (10*3,100*3)
 black_position={0,1,3,4,5}
 black = 0,0,0
 white = 255,255,255
+yellow = 225,225,0
 keynumber = 7*1
 
 
@@ -31,16 +33,12 @@ class Tone:
         
     
 ################
-    
-def run():
-    ##############
-    pygame.init()
-    screen = pygame.display.set_mode(size)
-    screen.fill(black)
+def newpiano(screen):
     for i in range(keynumber):
         pygame.draw.rect(screen, white, ((i*key_white[0], 0),key_white))
         
         pygame.draw.rect(screen, black, ((i*key_white[0], 0),key_white), 1)
+    
     for i in range(keynumber):
         if i%7 in black_position:
             pygame.draw.rect(screen, black, ((17*3+i*(key_white[0]), 0),key_black))
@@ -48,9 +46,39 @@ def run():
     pygame.display.update()
     
     
-    ##########################
-    keys=('q','w','e','r','t','y','u','i')
+def pressedpiano(screen, keys):
+    pressed = pygame.key.get_pressed()
+    for i, element in enumerate(keys):
+        if pressed[element]:
+            pygame.draw.rect(screen, yellow, ((i*key_white[0], 0),key_white))    
     
+    for i in range(keynumber):
+        pygame.draw.rect(screen, black, ((i*key_white[0], 0),key_white), 1)
+        if i%7 in black_position:
+            pygame.draw.rect(screen, black, ((17*3+i*(key_white[0]), 0),key_black))
+            
+    pygame.display.update()
+    
+def run():
+    ##############  new piano
+    
+    pygame.init()
+    screen = pygame.display.set_mode(size)
+    screen.fill(black)
+    for i in range(keynumber):
+        pygame.draw.rect(screen, white, ((i*key_white[0], 0),key_white))
+        
+        pygame.draw.rect(screen, black, ((i*key_white[0], 0),key_white), 1)
+    
+    for i in range(keynumber):
+        if i%7 in black_position:
+            pygame.draw.rect(screen, black, ((17*3+i*(key_white[0]), 0),key_black))
+            
+    pygame.display.update()
+    
+    ##########################
+    keys=('q','w','e','r','t','y','u')
+    pykeys=(pygame.K_q, pygame.K_w, pygame.K_e, pygame.K_r, pygame.K_t, pygame.K_y, pygame.K_u)
     tones={}
     for i in range(7):
         tones[i]=Tone(i+1)
@@ -75,6 +103,8 @@ def run():
             if (key in key_tones.keys()):
             #play for 500ms
                 key_tones[key].play(500)
+                newpiano(screen)
+                pressedpiano(screen, pykeys)
 
             elif event.key == pygame.K_ESCAPE:
                 pygame.quit()
@@ -82,6 +112,8 @@ def run():
         elif event.type == pygame.KEYUP and key in key_tones.keys():
             # Stops with 50ms fadeout
             key_tones[key].fadeout(50)
+            newpiano(screen)
+            pressedpiano(screen, pykeys)
     
     
     ########################
