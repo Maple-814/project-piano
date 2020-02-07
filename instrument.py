@@ -1,4 +1,3 @@
-import sounddevice as sd
 import numpy as np
 
 fs = 44100
@@ -21,13 +20,13 @@ class Tone:
     tau1 = 1
     tau2 = .2
     t_up = 5*tau1
-    t_down = 3*tau2
+    t_down = 5*tau2
 
     def __init__(self):
         self.list_tone = []
 
-        nom_note = ("Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si")
-        freq_note = (261.626, 277.183, 293.665, 311.127, 329.628, 349.228, 369.994, 391.995, 415.305, 440, 466.164, 493.883)
+        nom_note = ("Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si", "Do+", "Re+", "Mi+")
+        freq_note = (261.626, 277.183, 293.665, 311.127, 329.628, 349.228, 369.994, 391.995, 415.305, 440, 466.164, 493.883, 523.251, 587.330, 659.255)
         notes = {}
         for i in range(len(nom_note)):
             notes[nom_note[i]] = freq_note[i]
@@ -98,38 +97,4 @@ def callback(indata, outdata, frames, time,  status):
 tone = Tone()
 
 
-'''
-t0 = time.time()
-
-with sd.Stream(channels=2, callback=callback, blocksize=frames):
-    while True:
-        time.sleep(1)
-        tone.start_tone("Do",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Do",now(t0))
-        tone.start_tone("Re",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Re",now(t0))
-        tone.start_tone("Mi",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Mi",now(t0))
-        tone.start_tone("Fa",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Fa",now(t0))
-        tone.start_tone("Sol",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Sol",now(t0))
-        tone.start_tone("La",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("La",now(t0))
-        tone.start_tone("Si",now(t0))
-        time.sleep(0.5)
-        tone.stop_tone("Si",now(t0))
-    
-
-
-    time.sleep(10)
-
-
-'''
 
